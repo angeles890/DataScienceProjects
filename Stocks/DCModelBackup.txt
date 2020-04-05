@@ -1,0 +1,46 @@
+#upperChannel = 80
+
+for upperChannel in [20,30,40,50,60,70,80,90,100,110,120,130]:
+    lowerChannel = 200
+    highs = []
+    lows = []
+    nHigh = 0
+    nLow = 0
+
+    i = 0
+    positions = []
+
+
+    for j,n in df.iterrows():
+        highs.append(n['High'])
+        lows.append(n['Low'])
+        i +=1
+
+        if i >= upperChannel:
+            highs.remove(highs[0])
+        if i >= lowerChannel:
+            lows.remove(lows[0])
+
+        if i >=upperChannel:
+            pos = donchianChannelAI(nHigh,nLow,n,positions)
+
+            if(pos[0]==1):
+                #new position to add
+                positions.append(pos[1])
+            elif(pos[0]==2):
+                #drop most recent position and replace with updated version
+                positions.pop()
+                positions.append(pos[1])
+
+        nHigh = max(highs)
+        nLow = min(lows)
+
+    totalPL = 1
+    pl = []
+    for p in positions:
+        #print(p.entryDate,p.entryPrice,p.exitDate,p.exitPrice,p.profitLoss)
+        pl.append(p.profitLoss)
+        totalPL = totalPL * p.profitLoss
+    stdev = np.std(pl)
+    avgR = np.mean(pl)
+    print(str(upperChannel) +' day high -- '+ str(totalPL) + ' Avg: '+ str(avgR) + ' stdev: ' +str(stdev))
