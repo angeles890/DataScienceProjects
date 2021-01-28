@@ -11,5 +11,7 @@ Begin
 	Begin
 		Insert into tblPortfolio([Name],[Description],CreatedBy)
 		Values(@name,@description,@createdBy)		
+
+		Select SCOPE_IDENTITY();
 	End	
 End

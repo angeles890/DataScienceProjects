@@ -11,7 +11,8 @@ Begin
 
 	Select 
 		pkPortfolioID, 
-		[Name] 
+		[Name], 
+		isnull([description],'Add Description...') as 'description'
 	From tblPortfolio
 	Where CreatedBy = @fkuserID
 	Order by [Name] asc

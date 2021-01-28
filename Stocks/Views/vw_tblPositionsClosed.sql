@@ -8,6 +8,7 @@ SELECT
 	a.entryDate, 
 	a.exitDate, 
 	'daysInTrade' = DATEDIFF(dd,a.entryDate,a.exitDate), 
+	a.shareCount,
 	a.entryPrice, 
 	a.exitPrice,
 	'PL' = cast((a.exitPrice - a.entryPrice)*a.shareCount as money),

@@ -106,6 +106,11 @@ def get_price_history(key,**kwargs):
         
     return requests.get(url,params=params).json()  
 
+# function makes GET request to collect fundemental data for a stock
+def get_fundemental_data(key,ticker):
+    url = 'https://api.tdameritrade.com/v1/instruments?apikey={0}&symbol={1}&projection=fundamental'.format(key,ticker)    
+    return requests.get(url).json()
+
 class Position:
     def __init__(self,entryPrice,entryDate,exitPrice,exitDate,profitLoss,direction, ticker):
         self.entryPrice = entryPrice
